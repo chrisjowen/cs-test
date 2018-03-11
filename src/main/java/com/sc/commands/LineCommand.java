@@ -1,9 +1,12 @@
 package com.sc.commands;
 
-
 import com.sc.Coordinate;
+import com.sc.ListUtils;
+import com.sc.commands.exceptions.InvalidCommandException;
 
-public class LineCommand implements Command{
+import java.util.List;
+
+public class LineCommand implements Command {
     private Coordinate startCoordinate;
     private Coordinate endCoordinate;
 
@@ -22,5 +25,11 @@ public class LineCommand implements Command{
 
     public Coordinate getEndCoordinate() {
         return endCoordinate;
+    }
+
+    public static LineCommand fromArgs(List<String> args) throws InvalidCommandException {
+        List<Integer> intArgs = ListUtils.stringToInt(args);
+        if(intArgs.size()!=4) throw new InvalidCommandException(LineCommand.class);
+        return new LineCommand(intArgs.get(0),intArgs.get(1),intArgs.get(2),intArgs.get(3));
     }
 }

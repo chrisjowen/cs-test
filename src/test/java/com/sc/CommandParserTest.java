@@ -1,12 +1,9 @@
 package com.sc;
 
-import com.sc.commands.CanvasCommand;
-import com.sc.commands.Command;
-import com.sc.commands.LineCommand;
-import com.sc.commands.RectangleCommand;
-import com.sc.commands.exceptions.CommandParsingException;
-import com.sc.commands.exceptions.InvalidCommandArgumentsException;
-import com.sc.commands.exceptions.UnknownCommandParsingException;
+import com.sc.commands.*;
+import com.sc.commands.exceptions.CommandException;
+import com.sc.commands.exceptions.InvalidCommandException;
+import com.sc.commands.exceptions.UnknownCommandException;
 import org.hamcrest.CoreMatchers;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,27 +19,27 @@ public class CommandParserTest {
     private CommandParser commandParser = new CommandParser();
 
 
-    @Test(expected = UnknownCommandParsingException.class)
-    public void shouldErrorIfCommandUnknown() throws CommandParsingException {
+    @Test(expected = UnknownCommandException.class)
+    public void shouldErrorIfCommandUnknown() throws CommandException {
         commandParser.parse("U");
     }
 
-    @Test(expected = UnknownCommandParsingException.class)
-    public void shouldErrorIfCommandEmpty() throws CommandParsingException {
+    @Test(expected = UnknownCommandException.class)
+    public void shouldErrorIfCommandEmpty() throws CommandException {
         commandParser.parse("");
     }
 
     @Test
-    public void shouldParseCanvasCommand() throws CommandParsingException {
+    public void shouldParseCanvasCommand() throws CommandException {
         CanvasCommand command = issueCommand("C 0 10", CanvasCommand.class);
         assertEquals(command.getWidth(), 0);
         assertEquals(command.getHeight(), 10);
     }
 
     @Test
-    public void shouldFailParsingCanvasCommandWithTooFewArgs() throws CommandParsingException {
+    public void shouldFailParsingCanvasCommandWithTooFewArgs() throws CommandException {
 //        Setup Exception expectations
-        expected.expect(InvalidCommandArgumentsException.class);
+        expected.expect(InvalidCommandException.class);
         expected.expectMessage(CoreMatchers.containsString("Canvas"));
 
 //        Attempt to parse
@@ -50,9 +47,9 @@ public class CommandParserTest {
     }
 
     @Test
-    public void shouldFailParsingCanvasCommandWithTooManyArgs() throws CommandParsingException {
+    public void shouldFailParsingCanvasCommandWithTooManyArgs() throws CommandException {
 //        Setup Exception expectations
-        expected.expect(InvalidCommandArgumentsException.class);
+        expected.expect(InvalidCommandException.class);
         expected.expectMessage(CoreMatchers.containsString("Canvas"));
 
 //        Attempt to parse
@@ -60,16 +57,26 @@ public class CommandParserTest {
     }
 
     @Test
-    public void shouldParseLineCommand() throws CommandParsingException {
+    public void shouldFailParsingCanvasCommandWithInvalidArgs() throws CommandException {
+//        Setup Exception expectations
+        expected.expect(InvalidCommandException.class);
+        expected.expectMessage(CoreMatchers.containsString("Canvas"));
+
+//        Attempt to parse
+        commandParser.parse("C 0 I");
+    }
+
+    @Test
+    public void shouldParseLineCommand() throws CommandException {
         LineCommand command = issueCommand("L 0 0 1 0", LineCommand.class);
         assertEquals(command.getStartCoordinate().toString(), "0,0");
         assertEquals(command.getEndCoordinate().toString(), "1,0");
     }
 
     @Test
-    public void shouldFailParsingLineCommandWithTooFewArgs() throws CommandParsingException {
+    public void shouldFailParsingLineCommandWithTooFewArgs() throws CommandException {
 //        Setup Exception expectations
-        expected.expect(InvalidCommandArgumentsException.class);
+        expected.expect(InvalidCommandException.class);
         expected.expectMessage(CoreMatchers.containsString("Line"));
 
 //        Attempt to parse
@@ -77,9 +84,9 @@ public class CommandParserTest {
     }
 
     @Test
-    public void shouldFailParsingLineCommandWithTooManyArgs() throws CommandParsingException {
+    public void shouldFailParsingLineCommandWithTooManyArgs() throws CommandException {
 //        Setup Exception expectations
-        expected.expect(InvalidCommandArgumentsException.class);
+        expected.expect(InvalidCommandException.class);
         expected.expectMessage(CoreMatchers.containsString("Line"));
 
 //        Attempt to parse
@@ -87,9 +94,9 @@ public class CommandParserTest {
     }
 
     @Test
-    public void shouldFailParsingLineWithNoneIntArgs() throws CommandParsingException {
+    public void shouldFailParsingLineWithNoneIntArgs() throws CommandException {
 //        Setup Exception expectations
-        expected.expect(InvalidCommandArgumentsException.class);
+        expected.expect(InvalidCommandException.class);
         expected.expectMessage(CoreMatchers.containsString("Line"));
 
 //        Attempt to parse
@@ -97,16 +104,16 @@ public class CommandParserTest {
     }
 
     @Test
-    public void shouldParseRectangleCommand() throws CommandParsingException {
+    public void shouldParseRectangleCommand() throws CommandException {
         RectangleCommand command = issueCommand("R 0 0 10 10", RectangleCommand.class);
         assertEquals(command.getStartCoordinate().toString(), "0,0");
         assertEquals(command.getEndCoordinate().toString(), "10,10");
     }
 
     @Test
-    public void shouldFailParsingRectangleCommandWithTooFewArgs() throws CommandParsingException {
+    public void shouldFailParsingRectangleCommandWithTooFewArgs() throws CommandException {
 //        Setup Exception expectations
-        expected.expect(InvalidCommandArgumentsException.class);
+        expected.expect(InvalidCommandException.class);
         expected.expectMessage(CoreMatchers.containsString("Rectangle"));
 
 //        Attempt to parse
@@ -115,9 +122,9 @@ public class CommandParserTest {
 
 
     @Test
-    public void shouldFailParsingRectangleCommandWithTooManyArgs() throws CommandParsingException {
+    public void shouldFailParsingRectangleCommandWithTooManyArgs() throws CommandException {
 //        Setup Exception expectations
-        expected.expect(InvalidCommandArgumentsException.class);
+        expected.expect(InvalidCommandException.class);
         expected.expectMessage(CoreMatchers.containsString("Rectangle"));
 
 //        Attempt to parse
@@ -125,18 +132,62 @@ public class CommandParserTest {
     }
 
     @Test
-    public void shouldFailParsingRectangleWithNoneIntArgs() throws CommandParsingException {
+    public void shouldFailParsingRectangleWithNoneIntArgs() throws CommandException {
 //        Setup Exception expectations
-        expected.expect(InvalidCommandArgumentsException.class);
+        expected.expect(InvalidCommandException.class);
         expected.expectMessage(CoreMatchers.containsString("Rectangle"));
 
 //        Attempt to parse
         commandParser.parse("R 0 0 0 A");
     }
 
+    @Test
+    public void shouldParseFillCommand() throws CommandException {
+        FillCommand command = issueCommand("B 0 10 Y", FillCommand.class);
+        assertEquals(command.getCoordinate().toString(), "0,10");
+        assertEquals(command.getColor(), "Y");
+    }
+
+    @Test
+    public void shouldFailParsingFillCommandWithTooFewArgs() throws CommandException {
+//        Setup Exception expectations
+        expected.expect(InvalidCommandException.class);
+        expected.expectMessage(CoreMatchers.containsString("Fill"));
+
+//        Attempt to parse
+        commandParser.parse("B 0 0");
+    }
+
+    @Test
+    public void shouldFailParsingFillCommandWithTooManyArgs() throws CommandException {
+//        Setup Exception expectations
+        expected.expect(InvalidCommandException.class);
+        expected.expectMessage(CoreMatchers.containsString("Fill"));
+
+//        Attempt to parse
+        commandParser.parse("B 0 0 A B");
+    }
+
+    @Test
+    public void shouldFailParsingFillWithBadArgs() throws CommandException {
+//        Setup Exception expectations
+        expected.expect(InvalidCommandException.class);
+        expected.expectMessage(CoreMatchers.containsString("Fill"));
+
+//        Attempt to parse
+        commandParser.parse("B 0 B A");
+    }
+
+    @Test
+    public void shouldParseCommandsWithOddSpacing() throws CommandException {
+        CanvasCommand command = issueCommand("C 0  10", CanvasCommand.class);
+        assertEquals(command.getWidth(), 0);
+        assertEquals(command.getHeight(), 10);
+    }
+
 
 //    NOTE: Java Type Erasure Is An Terrible Idea!!
-    private <T> T issueCommand(String input, Class<T> objectClass) throws CommandParsingException {
+    private <T> T issueCommand(String input, Class<T> objectClass) throws CommandException {
         Command command = commandParser.parse(input);
         assertEquals(command.getClass(), objectClass);
         return (T)command;
