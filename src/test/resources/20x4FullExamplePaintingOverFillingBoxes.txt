@@ -1,0 +1,6 @@
+----------------------
+|gggggggggggggxxxxxgg|
+|xxxxxxgggggggxrrrxgg|
+|bbbbbxgggggggxxxxxgg|
+|bbbbbxgggggggggggggg|
+----------------------

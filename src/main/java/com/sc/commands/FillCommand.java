@@ -30,7 +30,6 @@ public class FillCommand implements Command {
     public static FillCommand fromArgs(List<String> args) throws InvalidCommandException {
         if(args.size()!=3) throw new InvalidCommandException(FillCommand.class);
         String color = args.remove(2);
-
         List<Integer> intArgs = ListUtils.stringToInt(args);
         if(intArgs.size()!=2) throw new InvalidCommandException(FillCommand.class);
 

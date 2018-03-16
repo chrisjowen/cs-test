@@ -15,7 +15,7 @@ public class LineCommand implements Command {
         this.endCoordinate = endCoordinate;
     }
 
-    public LineCommand(int x1, int y1,int x2,int y2) {
+    private LineCommand(int x1, int y1,int x2,int y2) {
         this(new Coordinate(x1, y1), new Coordinate(x2, y2));
     }
 
@@ -26,6 +26,8 @@ public class LineCommand implements Command {
     public Coordinate getEndCoordinate() {
         return endCoordinate;
     }
+
+
 
     public static LineCommand fromArgs(List<String> args) throws InvalidCommandException {
         List<Integer> intArgs = ListUtils.stringToInt(args);

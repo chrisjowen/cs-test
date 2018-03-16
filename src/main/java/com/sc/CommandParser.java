@@ -29,7 +29,6 @@ public class CommandParser {
     }
 
     private Command parseCommand(String input, String commandType, List<String> args) throws CommandException {
-//       Note: Would this be better as a Map<String,Function>
         switch (commandType) {
             case CANVAS_COMMAND_TYPE:
                 return CanvasCommand.fromArgs(args);
