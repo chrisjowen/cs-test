@@ -20,7 +20,7 @@ public class TextRendererTest {
     private TextRenderer renderer = new TextRenderer();
 
     @Test
-    public void canRenderEmptyCanvas() throws IOException {
+    public void canRenderEmptyCanvas() throws IOException, CommandProcessingException {
         CommandProcessor commandProcessor = CommandProcessor.init(new CanvasCommand(20, 4));
 
         assertEqualsOutputFromResource("empty20x4Canvas.txt", commandProcessor.renderWith(renderer));

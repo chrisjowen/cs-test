@@ -10,7 +10,7 @@ import com.sc.processors.exceptions.CommandProcessingException;
 public class RectangleCommandProcessor extends CommandProcessor<RectangleCommand> {
 
 
-    public RectangleCommandProcessor(Canvas canvas) throws CommandProcessingException {
+    public RectangleCommandProcessor(Canvas canvas)  {
         super(canvas);
     }
 
