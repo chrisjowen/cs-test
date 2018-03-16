@@ -1,7 +1,7 @@
 package com.sc.commands;
 
 import com.sc.Coordinate;
-import com.sc.ListUtils;
+import com.sc.utils.ListUtils;
 import com.sc.commands.exceptions.InvalidCommandException;
 
 import java.util.List;

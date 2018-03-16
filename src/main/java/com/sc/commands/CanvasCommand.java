@@ -2,7 +2,7 @@ package com.sc.commands;
 
 import com.sc.commands.exceptions.InvalidCommandException;
 import java.util.List;
-import static com.sc.ListUtils.stringToInt;
+import static com.sc.utils.ListUtils.stringToInt;
 
 public class CanvasCommand implements Command {
     private int width;

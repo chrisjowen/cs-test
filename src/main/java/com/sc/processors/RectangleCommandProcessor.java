@@ -6,36 +6,28 @@ import com.sc.Coordinate;
 import com.sc.commands.LineCommand;
 import com.sc.commands.RectangleCommand;
 import com.sc.processors.exceptions.CommandProcessingException;
-import com.sc.processors.exceptions.LineCommandProcessingException;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-public class RectangleCommandProcessor {
+public class RectangleCommandProcessor extends CommandProcessor<RectangleCommand> {
 
 
-    private RectangleCommand command;
-
-    public RectangleCommandProcessor(RectangleCommand command) throws CommandProcessingException {
-        this.command = command;
+    public RectangleCommandProcessor(Canvas canvas) throws CommandProcessingException {
+        super(canvas);
     }
 
-    public Canvas process(Canvas canvas) throws CommandProcessingException {
+    @Override
+    public CommandProcessor process(RectangleCommand command) throws CommandProcessingException {
         Coordinate a = command.getStartCoordinate();
         Coordinate c = command.getEndCoordinate();
         Coordinate b = new Coordinate(c.getX(), a.getY());
         Coordinate d = new Coordinate(a.getX(), c.getY());
 
-
-        return canvas.processCommand(new LineCommand(a, b))
-                        .processCommand(new LineCommand(b, c))
-                        .processCommand(new LineCommand(c, d))
-                        .processCommand(new LineCommand(d, a));
+        return this.then(new LineCommand(a, b))
+                .then(new LineCommand(b, c))
+                .then(new LineCommand(c, d))
+                .then(new LineCommand(d, a));
 
 
     }
-
 
 
 }

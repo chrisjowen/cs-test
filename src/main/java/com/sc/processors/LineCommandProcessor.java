@@ -11,16 +11,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class LineCommandProcessor {
+public class LineCommandProcessor extends CommandProcessor<LineCommand> {
 
-    private LineCommand command;
-
-    public LineCommandProcessor(LineCommand command)  {
-        this.command = command;
+    public LineCommandProcessor( Canvas canvas)  {
+        super(canvas);
     }
 
-    public Canvas process(Canvas canvas) throws CommandProcessingException {
-        return canvas.drawPixels(this.generateCoordinates(command), "x");
+    @Override
+    public CommandProcessor process(LineCommand command) throws CommandProcessingException {
+        canvas.addPixels(this.generateCoordinates(command), "x");
+        return this;
     }
 
     private List<Coordinate> generateCoordinates(LineCommand command) throws CommandProcessingException {

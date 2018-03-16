@@ -40,7 +40,7 @@ public class CommandParserTest {
     public void shouldFailParsingCanvasCommandWithTooFewArgs() throws CommandException {
 //        Setup Exception expectations
         expected.expect(InvalidCommandException.class);
-        expected.expectMessage(CoreMatchers.containsString("Canvas"));
+        expected.expectMessage(CoreMatchers.containsString("CanvasCommand"));
 
 //        Attempt to parse
         commandParser.parse("C 0");
@@ -50,7 +50,7 @@ public class CommandParserTest {
     public void shouldFailParsingCanvasCommandWithTooManyArgs() throws CommandException {
 //        Setup Exception expectations
         expected.expect(InvalidCommandException.class);
-        expected.expectMessage(CoreMatchers.containsString("Canvas"));
+        expected.expectMessage(CoreMatchers.containsString("CanvasCommand"));
 
 //        Attempt to parse
         commandParser.parse("C 0 10 100");
@@ -60,7 +60,7 @@ public class CommandParserTest {
     public void shouldFailParsingCanvasCommandWithInvalidArgs() throws CommandException {
 //        Setup Exception expectations
         expected.expect(InvalidCommandException.class);
-        expected.expectMessage(CoreMatchers.containsString("Canvas"));
+        expected.expectMessage(CoreMatchers.containsString("CanvasCommand"));
 
 //        Attempt to parse
         commandParser.parse("C 0 I");

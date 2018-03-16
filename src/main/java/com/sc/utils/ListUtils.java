@@ -1,4 +1,4 @@
-package com.sc;
+package com.sc.utils;
 
 import java.util.ArrayList;
 import java.util.List;

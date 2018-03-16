@@ -1,4 +1,4 @@
-package com.sc;
+package com.sc.commands;
 
 import com.sc.commands.*;
 import com.sc.commands.exceptions.CommandException;
