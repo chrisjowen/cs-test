@@ -10,6 +10,10 @@ public class Coordinate {
         this.y = y;
     }
 
+    public boolean onSameVector(Coordinate other) {
+        return this.getX() == other.getX() || this.getY() == other.getY();
+    }
+
     public int getX() {
         return x;
     }
@@ -19,15 +23,16 @@ public class Coordinate {
     }
 
     @Override
+    public String toString() {
+        return String.format("%d,%d", x, y);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Coordinate that = (Coordinate) o;
-
-        if (x != that.x) return false;
-        return y == that.y;
-
+        return x == that.x && y == that.y;
     }
 
     @Override
@@ -35,18 +40,5 @@ public class Coordinate {
         int result = x;
         result = 31 * result + y;
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%d,%d", x, y);
-    }
-
-    public boolean onSameVector(Coordinate other) {
-        return this.getX() == other.getX() || this.getY() == other.getY();
-    }
-
-    public Coordinate normalized() {
-        return new Coordinate(x-1, y-1);
     }
 }

@@ -23,6 +23,7 @@ public class Canvas {
     }
 
     public Character getPixel(Coordinate coordinate) {
+        if(!isInBounds(coordinate)) return null;
         return pixels[coordinate.getX() - 1][coordinate.getY() - 1];
     }
 

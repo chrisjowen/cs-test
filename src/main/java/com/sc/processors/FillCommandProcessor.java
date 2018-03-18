@@ -1,7 +1,6 @@
 package com.sc.processors;
 
 
-import com.sc.CommandProcessor;
 import com.sc.model.Canvas;
 import com.sc.model.Coordinate;
 import com.sc.model.PaintContext;
@@ -24,16 +23,18 @@ public class FillCommandProcessor extends CommandProcessor<FillCommand> {
     private List<Coordinate> generateCoordinates(Coordinate coordinate, Canvas canvas) {
         List<Coordinate> toPaint = new ArrayList<>();
         List<Coordinate> toProcess = new ArrayList<>();
-        Character currentPixel = canvas.getPixel(coordinate);
 
-        toProcess.add(coordinate);
+        if(canvas.isInBounds(coordinate)) {
+            Character currentPixel = canvas.getPixel(coordinate);
+            toProcess.add(coordinate);
 
-        while(toProcess.size()>0) {
-            Coordinate next = toProcess.remove(0);
-            if(canvas.isInBounds(next) && !toPaint.contains(next) && Objects.equals(canvas.getPixel(next), currentPixel)) {
-                toPaint.add(next);
-                List<Coordinate> surroundingCoordinates = getSurroundingCoordinates(next);
-                toProcess.addAll(surroundingCoordinates);
+            while(toProcess.size()>0) {
+                Coordinate next = toProcess.remove(0);
+                if(canvas.isInBounds(next) && !toPaint.contains(next) && Objects.equals(canvas.getPixel(next), currentPixel)) {
+                    toPaint.add(next);
+                    List<Coordinate> surroundingCoordinates = getSurroundingCoordinates(next);
+                    toProcess.addAll(surroundingCoordinates);
+                }
             }
         }
         return toPaint;

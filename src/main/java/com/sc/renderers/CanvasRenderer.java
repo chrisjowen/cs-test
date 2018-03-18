@@ -1,4 +1,4 @@
-package com.sc;
+package com.sc.renderers;
 
 
 import com.sc.model.Canvas;

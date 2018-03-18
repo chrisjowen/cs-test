@@ -1,7 +1,6 @@
 package com.sc.renderers;
 
 
-import com.sc.CanvasRenderer;
 import com.sc.model.Canvas;
 import com.sc.model.Coordinate;
 import com.sc.utils.ListUtils;

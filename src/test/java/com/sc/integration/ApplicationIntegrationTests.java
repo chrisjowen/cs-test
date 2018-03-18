@@ -4,7 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.sc.Application;
 import com.sc.CommandParser;
-import com.sc.CommandProcessor;
+import com.sc.processors.CommandProcessor;
 import com.sc.Painter;
 import com.sc.commands.CanvasCommand;
 import com.sc.commands.FillCommand;
@@ -12,7 +12,6 @@ import com.sc.commands.LineCommand;
 import com.sc.commands.RectangleCommand;
 import com.sc.commands.exceptions.CommandParsingException;
 import com.sc.model.Canvas;
-import com.sc.model.Coordinate;
 import com.sc.processors.*;
 import com.sc.processors.exceptions.CommandProcessingException;
 import com.sc.renderers.BaseTextCanvasRenderer;
@@ -26,7 +25,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class ApplicationIntegrationTest {
+public class ApplicationIntegrationTests {
     private Painter painter;
     private Application application;
     private TestTextCanvasRenderer renderer ;

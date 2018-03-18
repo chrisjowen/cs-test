@@ -13,7 +13,7 @@ import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
-public class CommandParserTest {
+public class CommandParserTests {
 
     @Rule
     public ExpectedException expected = ExpectedException.none();
@@ -146,7 +146,7 @@ public class CommandParserTest {
     public void shouldParseFillCommand() throws CommandParsingException {
         FillCommand command = issueCommand("B 0 10 Y", FillCommand.class);
         assertEquals(command.getCoordinate().toString(), "0,10");
-        assertEquals(command.getColor(), "Y");
+        assertEquals(command.getColor().toString(), "Y");
     }
 
     @Test

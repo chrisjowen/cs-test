@@ -1,2 +1,4 @@
 - Render past end ok
 - Can reverse lines
+- Fill past does nothing
+- Didnt consider performance at all

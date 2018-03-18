@@ -1,6 +1,5 @@
 package com.sc.processors;
 
-import com.sc.CommandProcessor;
 import com.sc.model.Canvas;
 import com.sc.model.PaintContext;
 import com.sc.commands.CanvasCommand;

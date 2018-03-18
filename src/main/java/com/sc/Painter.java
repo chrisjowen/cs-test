@@ -4,7 +4,9 @@ package com.sc;
 import com.sc.model.Canvas;
 import com.sc.model.Command;
 import com.sc.model.PaintContext;
+import com.sc.processors.CommandProcessor;
 import com.sc.processors.exceptions.CommandProcessingException;
+import com.sc.processors.exceptions.MissingCommandProcessorException;
 
 import java.util.Map;
 
@@ -22,6 +24,7 @@ public class Painter {
     }
 
     private Canvas getCanvas(Command command) throws CommandProcessingException {
+        if(!this.processors.containsKey(command.getClass())) throw new MissingCommandProcessorException(command);
         return this.processors.get(command.getClass()).process(command, context);
     }
 

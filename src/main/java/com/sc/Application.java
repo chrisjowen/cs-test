@@ -4,6 +4,7 @@ package com.sc;
 import com.sc.model.Command;
 import com.sc.commands.exceptions.CommandParsingException;
 import com.sc.processors.exceptions.CommandProcessingException;
+import com.sc.renderers.CanvasRenderer;
 
 public class Application {
     private Painter painter;
