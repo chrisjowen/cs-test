@@ -1,4 +1,4 @@
-package com.sc;
+package com.sc.model;
 
 
 public class Coordinate {

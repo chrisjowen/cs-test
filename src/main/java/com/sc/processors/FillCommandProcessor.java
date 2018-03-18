@@ -1,9 +1,12 @@
 package com.sc.processors;
 
 
-import com.sc.Canvas;
-import com.sc.Coordinate;
+import com.sc.CommandProcessor;
+import com.sc.model.Canvas;
+import com.sc.model.Coordinate;
+import com.sc.model.PaintContext;
 import com.sc.commands.FillCommand;
+import com.sc.processors.exceptions.CommandProcessingException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,20 +15,16 @@ import java.util.Objects;
 public class FillCommandProcessor extends CommandProcessor<FillCommand> {
 
 
-    public FillCommandProcessor(Canvas canvas) {
-        super(canvas);
-    }
-
     @Override
-    public CommandProcessor process(FillCommand command) {
-        canvas.addPixels(this.generateCoordinates(command.getCoordinate()), command.getColor());
-        return this;
+    public Canvas process(FillCommand command, PaintContext context) throws CommandProcessingException {
+        Canvas canvas = getCanvas(command,context);
+        return canvas.addPixels(this.generateCoordinates(command.getCoordinate(), canvas), command.getColor());
     }
 
-    private List<Coordinate> generateCoordinates(Coordinate coordinate) {
+    private List<Coordinate> generateCoordinates(Coordinate coordinate, Canvas canvas) {
         List<Coordinate> toPaint = new ArrayList<>();
         List<Coordinate> toProcess = new ArrayList<>();
-        String currentPixel = canvas.getPixel(coordinate);
+        Character currentPixel = canvas.getPixel(coordinate);
 
         toProcess.add(coordinate);
 
@@ -40,6 +39,7 @@ public class FillCommandProcessor extends CommandProcessor<FillCommand> {
         return toPaint;
     }
 
+//  Get all coordinates surrounding the given coordinate
     private List<Coordinate> getSurroundingCoordinates(Coordinate coordinate) {
         int x = coordinate.getX();
         int y = coordinate.getY();

@@ -1,4 +1,4 @@
-package com.sc.commands;
+package com.sc.model;
 
 
 // Marker interface

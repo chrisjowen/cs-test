@@ -1,42 +1,29 @@
 package com.sc;
 
 
-import com.sc.commands.Command;
-import com.sc.commands.CommandParser;
-import com.sc.commands.exceptions.CommandException;
-import com.sc.processors.CommandProcessor;
+import com.sc.model.Command;
+import com.sc.commands.exceptions.CommandParsingException;
 import com.sc.processors.exceptions.CommandProcessingException;
 
-import java.io.Console;
-import java.util.Scanner;
+public class Application {
+    private Painter painter;
+    private final CommandParser parser;
+    private final CanvasRenderer renderer;
 
-public  class Application {
-    public static void main(String[] args) {
+    public Application(Painter painter, CommandParser parser, CanvasRenderer renderer) {
+        this.painter = painter;
+        this.parser = parser;
+        this.renderer = renderer;
+    }
 
-        CommandProcessor processor = null;
-        CommandParser parser = new CommandParser();
-        TextRenderer renderer = new TextRenderer();
+    public Application processInput(String input) throws CommandProcessingException, CommandParsingException {
+        Command command = parser.parse(input);
+        painter = painter.paint(command);
+        return this;
+    }
 
-        Scanner scanInput = new Scanner(System.in);
-
-
-        while (true) {
-            String input = scanInput.nextLine();
-            try {
-                Command command = parser.parse(input);
-                if (processor == null) {
-                    processor = CommandProcessor.init(command);
-                }
-                else {
-                    processor = processor.then(command);
-                }
-                System.out.println(processor.renderWith(renderer));
-
-            } catch (CommandProcessingException | CommandException e) {
-                System.out.println(e.getMessage());
-            }
-
-        }
-
+    public Application render() {
+        renderer.render(painter.getCanvas());
+        return this;
     }
 }

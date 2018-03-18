@@ -19,7 +19,7 @@
 //    @Test()
 //    public void shouldCreateCanvasWithHorizontalLine() throws CommandProcessingException {
 //        CommandProcessor canvas = new CommandProcessor(5, 3)
-//                    .then(new LineCommand(new Coordinate(2, 2), new Coordinate(4, 2)));
+//                    .paint(new LineCommand(new Coordinate(2, 2), new Coordinate(4, 2)));
 //
 //        assertEquals(canvas.getPixel(0,0), null);
 //        assertEquals(canvas.getPixel(0,1), null);

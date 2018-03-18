@@ -1,14 +1,21 @@
-package com.sc;
+package com.sc.renderers;
 
+
+import com.sc.CanvasRenderer;
+import com.sc.model.Canvas;
+import com.sc.model.Coordinate;
+import com.sc.utils.ListUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class TextRenderer implements Renderer<String> {
+public abstract class BaseTextCanvasRenderer implements CanvasRenderer {
 
     @Override
-    public String render(Canvas canvas) {
+    public abstract void render(Canvas canvas);
+
+    protected String renderText(Canvas canvas) {
         String bound = getBound(canvas);
         List<String> lines = IntStream.range(1, canvas.getHeight()+1)
                 .mapToObj(y -> renderLine(canvas, y))
@@ -24,16 +31,16 @@ public class TextRenderer implements Renderer<String> {
     }
 
     private String renderLine(Canvas canvas, int y) {
-        List<String> lineItems = IntStream
+        List<Character> lineItems = IntStream
                 .range(1, canvas.getWidth() + 1)
                 .mapToObj(x -> renderPixel(canvas, new Coordinate(x, y)))
-                .collect(Collectors.<String>toList());
-        return String.format("|%s|", String.join("", lineItems));
+                .collect(Collectors.<Character>toList());
+        return String.format("|%s|", ListUtils.joinChars(lineItems));
     }
 
-    private String renderPixel(Canvas canvas, Coordinate coordinate) {
-        String pixel = canvas.getPixel(coordinate);
-        return pixel == null ? " " : pixel;
+    private Character renderPixel(Canvas canvas, Coordinate coordinate) {
+        Character pixel = canvas.getPixel(coordinate);
+        return pixel == null ? ' '  : pixel;
     }
 
 }

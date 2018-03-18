@@ -2,6 +2,7 @@ package com.sc.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class ListUtils {
@@ -14,5 +15,9 @@ public class ListUtils {
         } catch (NumberFormatException e) {
             return new ArrayList<>();
         }
+    }
+
+    public static String joinChars(List<Character> chars) {
+        return chars.stream().map(String::valueOf).collect(Collectors.joining());
     }
 }

@@ -1,8 +1,10 @@
-package com.sc.commands;
+package com.sc;
 
 import com.sc.commands.*;
-import com.sc.commands.exceptions.CommandException;
+import com.sc.commands.exceptions.CommandParsingException;
 import com.sc.commands.exceptions.UnknownCommandException;
+import com.sc.model.Command;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +18,7 @@ public class CommandParser {
     private static final String FILL_COMMAND_TYPE = "B";
 
 
-    public Command parse(String input) throws CommandException {
+    public Command parse(String input) throws CommandParsingException {
         List<String> args = Arrays.asList(input.split(" "))
                 .stream()
                 .filter(i -> !Objects.equals(i, ""))
@@ -28,7 +30,7 @@ public class CommandParser {
 
     }
 
-    private Command parseCommand(String input, String commandType, List<String> args) throws CommandException {
+    private Command parseCommand(String input, String commandType, List<String> args) throws CommandParsingException {
         switch (commandType) {
             case CANVAS_COMMAND_TYPE:
                 return CanvasCommand.fromArgs(args);

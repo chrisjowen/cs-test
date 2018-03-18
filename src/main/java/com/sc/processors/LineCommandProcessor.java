@@ -1,8 +1,10 @@
 package com.sc.processors;
 
 
-import com.sc.Canvas;
-import com.sc.Coordinate;
+import com.sc.CommandProcessor;
+import com.sc.model.Canvas;
+import com.sc.model.Coordinate;
+import com.sc.model.PaintContext;
 import com.sc.commands.LineCommand;
 import com.sc.processors.exceptions.CommandProcessingException;
 import com.sc.processors.exceptions.LineCommandProcessingException;
@@ -13,14 +15,11 @@ import java.util.stream.IntStream;
 
 public class LineCommandProcessor extends CommandProcessor<LineCommand> {
 
-    public LineCommandProcessor( Canvas canvas)  {
-        super(canvas);
-    }
 
     @Override
-    public CommandProcessor process(LineCommand command) throws CommandProcessingException {
-        canvas.addPixels(this.generateCoordinates(command), "x");
-        return this;
+    public Canvas process(LineCommand command, PaintContext context) throws CommandProcessingException {
+        Canvas canvas = getCanvas(command,context);
+        return canvas.addPixels(this.generateCoordinates(command), 'x');
     }
 
     private List<Coordinate> generateCoordinates(LineCommand command) throws CommandProcessingException {
